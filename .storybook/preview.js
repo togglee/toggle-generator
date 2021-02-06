@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css'
-import 'font-awesome/css/font-awesome.min.css'
+// import 'font-awesome/css/font-awesome.min.css'
 import '../src/App.scss'
 
 export const parameters = {
