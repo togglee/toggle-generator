@@ -11,7 +11,10 @@ const DefaultPage = ({ finishedLoading }) => {
   const [data,setData] = useState({
       toggles:[]
   });
-
+  const changeData = async (field, value) => {
+    setData({...data, [field]: value })
+    console.log(data)
+  }
   useEffect(finishedLoading ,[finishedLoading]);
   return (<>
     <Table striped hover size="sm" data-testid="main-table">
@@ -22,11 +25,11 @@ const DefaultPage = ({ finishedLoading }) => {
                 <th>Type</th>
                 <th><div className="actions">
                     Actions
-                    <Button onClick={() => setData({ ...data, toggles: [...data.toggles, {
+                    <Button onClick={() => changeData("toggles", [...data.toggles, {
                       name: faker.random.word(),
                       type: "release",
                       status: false,
-                    }]})}><FontAwesomeIcon icon={['fas', 'plus']} /></Button>
+                    }])}><FontAwesomeIcon icon={['fas', 'plus']} /></Button>
                 </div></th>
             </tr>
         </thead>
@@ -37,11 +40,11 @@ const DefaultPage = ({ finishedLoading }) => {
                 <td>{toggle.name}</td>
                 <td><BootstrapSwitchButton
                     checked={toggle.status}
-                    onChange={(checked) => console.log("update")}/>
+                    onChange={(checked) => changeData("toggles", data.toggles.map((toggleToChange, indexToChange) => indexToChange === index? {...toggleToChange, status: checked} : toggleToChange))}/>
                 </td>
                 <td><Form.Control 
                         as="select"
-                        onChange={event => console.log("update")}
+                        onChange={event => changeData("toggles", data.toggles.map((toggleToChange, indexToChange) => indexToChange === index? {...toggleToChange, type: event.target.value} : toggleToChange))}
                         value={toggle.type} 
                         required>
                     {
@@ -53,7 +56,7 @@ const DefaultPage = ({ finishedLoading }) => {
                 </td>
                 <td>
                     <div className="actions">
-                    <Button onClick={() => setData({ ...data, toggles: data.toggles.filter((_, indexDelete) => index !== indexDelete)})}><FontAwesomeIcon icon={['fas', 'trash']} /></Button>
+                    <Button onClick={() => changeData("toggles", data.toggles.filter((_, indexDelete) => index !== indexDelete))}><FontAwesomeIcon icon={['fas', 'trash']} /></Button>
                     </div>
                 </td>
               </tr>
