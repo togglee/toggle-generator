@@ -20,16 +20,20 @@ const DefaultPage = ({ finishedLoading }) => {
     const result = {...data, [field]: value }
     setData(result)
     setProcessData({
-      toggles: result.toggles.map(toggle => {
+      toggles: result.toggles
+      .map(toggle => {
 
         const mappedToggle = {
           name: toggle.name,
           type: toggle.type,
-          conditions: toggle.type=== TOGGLE_TYPES[1]? toggle.conditions : undefined,
+          conditions: toggle.type=== TOGGLE_TYPES[1]? toggle.conditions.filter(condition => condition.field && condition.value) : undefined,
           value: toggle.type=== TOGGLE_TYPES[0]? toggle.value : undefined,
         }
         return JSON.parse(JSON.stringify(mappedToggle))
-      })
+      }).filter(toggle => 
+        toggle.name 
+        && (
+          toggle.type ===TOGGLE_TYPES[0] || toggle.conditions.length > 0))
     })
   }
   const updateToggle = async (index, field, value) =>
