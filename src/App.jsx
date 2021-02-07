@@ -40,13 +40,13 @@ const PublicRoute = ({ ...rest }) => (
 
 const App = () => {
   return (<div id="main">
-    <Navbar bg="dark" variant="dark">
+    <Navbar>
       <Navbar.Brand href="/">
         <img
           alt=""
           src="./logo.webp"
-          width="170"
-          height="32"
+          width="110"
+          height="42"
           className="d-inline-block align-top"
         />
       </Navbar.Brand>
